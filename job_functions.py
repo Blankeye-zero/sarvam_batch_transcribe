@@ -1,5 +1,4 @@
 from pprint import pprint
-from dotenv import load_dotenv
 import requests
 import json
 from sarvam_client import API_SUBSCRIPTION_KEY,LANGUAGE_CODE
