@@ -1,0 +1,8 @@
+asyncio
+python-dotenv
+pydub
+moviepy
+azure-storage-file-datalake
+aiofiles
+aiohttp
+requests
