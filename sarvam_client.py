@@ -21,8 +21,6 @@ load_dotenv()
 API_SUBSCRIPTION_KEY = os.getenv("SARVAM_KEY")
 LANGUAGE_CODE = "ta-IN" 
 
-pprint(API_SUBSCRIPTION_KEY)
-
 class SarvamClient:
     def __init__(self, url: str):
         self.account_url, self.file_system_name, self.directory_name, self.sas_token = (
@@ -58,7 +56,8 @@ class SarvamClient:
         ) as directory_client:
             tasks = []
             for path in local_file_paths:
-                file_name = path.split("/")[-1]
+                file_name = path.split("\\")[-1]
+                print(f'file name: {file_name}')
                 tasks.append(
                     self._upload_file(directory_client, path, file_name, overwrite)
                 )
@@ -72,7 +71,7 @@ class SarvamClient:
     ):
         try:
             async with aiofiles.open(local_file_path, mode="rb") as file_data:
-                mime_type = mimetypes.guess_type(local_file_path)[0] or "audio/wav"
+                mime_type = mimetypes.guess_type(local_file_path)[0] or 'audio/wav'
                 file_client = directory_client.get_file_client(file_name)
                 data = await file_data.read()
                 await file_client.upload_data(

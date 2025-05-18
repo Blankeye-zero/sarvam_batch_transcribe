@@ -14,12 +14,10 @@ def split_video_to_audio_segments(video_path, segment_length_mins=5, output_dir=
     output_dir (str): Directory to save the output audio segments
     """
     # Create output directory if it doesn't exist
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
+    os.makedirs(output_dir,exist_ok=True)
 
     # Extract filename without extension
     base_filename = os.path.splitext(os.path.basename(video_path))[0]
-    print(base_filename)
 
     # Convert video to audio
     print("Extracting audio from video...")
