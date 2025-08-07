@@ -2,11 +2,28 @@ import os
 import sys
 import io
 import asyncio
+import json
 from pprint import pprint
 from dotenv import load_dotenv
 import job_functions as jbf
 from transform_files import split_video_to_audio_segments
 from sarvam_client import SarvamClient
+
+def extract_transcripts(folder_path, output_file):
+        with open(output_file, 'w', encoding='utf-8') as outfile:
+            # Walk through all the files in the folder
+            for root, dirs, files in os.walk(folder_path):
+                for filename in files:
+                    if filename.endswith('.json'):
+                        file_path = os.path.join(root, filename)
+                        try:
+                            with open(file_path, 'r', encoding='utf-8') as infile:
+                                data = json.load(infile)
+                                transcript = data.get('transcript')
+                                if transcript:
+                                    outfile.write(transcript + '\n')
+                        except (json.JSONDecodeError, IOError) as e:
+                            print(f"Error reading {file_path}: {e}")
 
 async def main():
     '''
@@ -100,9 +117,10 @@ async def main():
 
     print(f"\n === Download Complete === \n")
     print(f"\n === Files available at {DOWNLOAD_PATH} === ")
-
-
+    extract_transcripts(DOWNLOAD_PATH,"transcript.txt")
 
 # Run the main function
 if __name__ == "__main__":
     asyncio.run(main())
+    
+# சொந்த செலவுகளைக் கழித்து விட்டு ஜகாத் கொடுக்கலாமா?
