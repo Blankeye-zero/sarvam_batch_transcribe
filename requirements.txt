@@ -1,8 +1,9 @@
 asyncio
 python-dotenv
 pydub
-moviepy
+moviepy==1.0.3
 azure-storage-file-datalake
 aiofiles
 aiohttp
 requests
+dotenv
